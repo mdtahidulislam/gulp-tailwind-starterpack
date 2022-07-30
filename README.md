@@ -5,4 +5,4 @@
     * npm run dev
     * npm run tailwind
 * for production: npm run build
-* for makin zip file: npm run bundle
+* for making zip file: npm run bundle
