@@ -51,6 +51,10 @@ const paths = {
       src: ['src/**/*.html'],
       dest: 'dist/'
     },
+    copyCss: {
+      src: ['src/assets/css/*.css', '!src/assets/css/tailwind.css'],
+      dest: 'dist/assets/css/'
+    },
     package: {
       // src: ['**/*', '!node_modules{,/**}', '!src{,/**}', '!gitignore', '!.babelrc', '!gulpfile.babel.js', '!package-lock.json', '!package.json', '!tailwind.config.cjs'], // customise it
       src: ['dist/**/*'], // customise it
@@ -98,10 +102,16 @@ export const js = () => {
     .pipe(gulp.dest(paths.js.dest))
 }
 
-// copy assets task
+// copy assets 
 export const copyAssets = () => {
   return gulp.src(paths.copyAssets.src)
     .pipe(gulp.dest(paths.copyAssets.dest))
+}
+
+// copy css
+export const copyCss = () => {
+  return gulp.src(paths.copyCss.src)
+    .pipe(gulp.dest(paths.copyCss.dest))
 }
 
 // static server
@@ -136,8 +146,8 @@ export const monitor = () => {
 }
 
 // task serialize
-export const dev = gulp.series(gulp.parallel(styles, js, images, copyAssets), staticServer, monitor); // for development
-export const build = gulp.series(gulp.parallel(styles, js, images, copyAssets)); // for production
+export const dev = gulp.series(gulp.parallel(styles, js, images, copyAssets, copyCss), staticServer, monitor); // for development
+export const build = gulp.series(gulp.parallel(styles, js, images, copyAssets, copyCss)); // for production
 export const bundle = gulp.series(build, compress); // for final zipped 
 
 // default task
